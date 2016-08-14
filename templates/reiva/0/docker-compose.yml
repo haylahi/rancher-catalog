@@ -44,8 +44,8 @@ reiva:
     PGHOST: db
     PGPASSWORD: odoo
     PGUSER: odoo
-	DBPASS: ${DBPASS}
-	DBNAME: ${DBNAME}
+    DBPASS: ${DBPASS
+    DBNAME: ${DBNAME}
   labels:
     io.rancher.sidekicks: reiva-data
     io.rancher.container.pull_image: always
