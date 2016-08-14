@@ -1,0 +1,59 @@
+postgres-data:
+  labels:
+    io.rancher.container.start_once: 'true'
+  command:
+  - /bin/true
+  tty: true
+  image: postgres:9.4
+  volumes:
+  - ${DATAPATH}/pgsqldata:/var/lib/postgresql/data/pgdata
+  stdin_open: true
+
+postgres:
+  environment:
+    PGDATA: /var/lib/postgresql/data/pgdata
+    POSTGRES_PASSWORD: odoo
+    POSTGRES_USER: odoo
+  labels:
+    io.rancher.sidekicks: db-data
+    io.rancher.container.pull_image: always
+  tty: true
+  hostname: db
+  image: postgres:9.4
+  volumes_from:
+  - postegres-data
+  stdin_open: true
+
+reiva-data:
+  labels:
+    io.rancher.container.start_once: 'true'
+  command:
+  - /bin/true
+  tty: true
+  image: reg.portall.ca/portall/odoo:latest
+  links:
+  - postgres:db
+  volumes:
+  - ${DATAPATH}/extra-addons:/mnt/extra-addons
+  stdin_open: true
+
+reiva:
+  ports:
+  - ${ODOOPORT}:8069/tcp
+  environment:
+    PGHOST: db
+    PGPASSWORD: odoo
+    PGUSER: odoo
+	DBPASS: ${DBPASS}
+	DBNAME: ${DBNAME}
+  labels:
+    io.rancher.sidekicks: reiva-data
+    io.rancher.container.pull_image: always
+  tty: true
+  image: reg.portall.ca/reiva/docker-odoo:latest
+  links:
+  - postgres:db
+  volumes_from:
+  - odoo-data
+  stdin_open: true
+

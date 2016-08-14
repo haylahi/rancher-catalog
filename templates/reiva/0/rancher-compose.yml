@@ -1,0 +1,58 @@
+.catalog:
+  name: "Reiva"
+  version: "v0.1-portall"
+  description: "Application web de Reiva pour gérer son MLM, populsé par Odoo, adapté par Portall. Nécessite Rancher version 0.44.0"
+  minimum_rancher_version: v0.44.0
+  questions:
+    - variable: "DBPASS"
+      label: "Mot de passe DB-Odoo"
+      description: "Mot de passe de gestionaire de base de donées pour Odoo, pas pour Postgress."
+      type: "string"
+      default: "R3!v4P4ss"
+      required: true
+    - variable: "DATAPATH"
+      label: "Dossier de stockage"
+      description : "Répertoire de stockage sur le machine hôte"
+	  default: "/srv/Reiva)"
+      type: "string"
+      required: true
+    - variable: "DBNAME"
+      label: "Nom de la b.d."
+      description: "Nom de la base de données"
+      type: "string"
+      default: "Reiva"
+      required: true
+    - variable: "ODOOPORT"
+      label: "Port de Odoo"
+      description: "Port qui sera utilisé pour communiquer depuis le web vers le serveur Odoo"
+      type: "int"
+      default: 8169 
+      required: false
+
+reiva:
+   scale: 1
+  health_check:
+    port: 8080
+    interval: 5000
+    unhealthy_threshold: 3
+    strategy: recreate
+    healthy_threshold: 3
+    response_timeout: 5000
+
+postgres:
+  scale: 1
+  health_check:
+    port: 5432
+    interval: 5000
+    unhealthy_threshold: 3
+    strategy: recreate
+    response_timeout: 5000
+    healthy_threshold: 3
+
+postgres-data:
+  scale: 1
+
+reiva-data:
+  scale: 1
+
+

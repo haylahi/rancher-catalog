@@ -1,0 +1,5 @@
+name: Reiva
+description: |
+  Site web de Reïva propulsé pour Odoo et adapté par Portall
+version: v0.1-portall
+category: ERP
