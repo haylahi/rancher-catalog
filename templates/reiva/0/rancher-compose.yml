@@ -12,8 +12,8 @@
       required: true
     - variable: "DATAPATH"
       label: "Dossier de stockage"
-      description : "Répertoire de stockage sur le machine hôte"
-	  default: "/srv/Reiva)"
+      description : "Répertoire de stockage sur le machine hôte" 
+      default: "/srv/Reiva)"
       type: "string"
       required: true
     - variable: "DBNAME"
