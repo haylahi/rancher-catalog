@@ -30,7 +30,7 @@
       required: false
 
 reiva:
-   scale: 1
+  scale: 1
   health_check:
     port: 8080
     interval: 5000
